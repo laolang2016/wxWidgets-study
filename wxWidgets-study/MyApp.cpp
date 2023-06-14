@@ -1,52 +1,37 @@
-ï»¿// wxWidgets "Hello World" Program
-
-// For compilers that support precompilation, includes "wx/wx.h".
-#define WXUSINGDLL
+// #define WXUSINGDLL
 // #define __WXMSW__
 // #define _UNICODE
-#include <wx/wxprec.h>
 
-#ifndef WX_PRECOMP
-#include <wx/wx.h>
-#endif
+#include <wx/log.h>
+#include <wx/frame.h>
+#include <wx/textctrl.h>
 
-class MyApp : public wxApp
-{
-public:
-    virtual bool OnInit();
-};
+#include "MyApp.h"
+#include "MyLogWindow.h"
 
-class MyFrame : public wxFrame
-{
-public:
-    MyFrame();
-
-private:
-    void OnHello(wxCommandEvent& event);
-    void OnExit(wxCommandEvent& event);
-    void OnAbout(wxCommandEvent& event);
-};
-
-enum
-{
-    ID_Hello = 1
-};
-
-wxIMPLEMENT_APP(MyApp);
 
 bool MyApp::OnInit()
 {
     MyFrame* frame = new MyFrame();
+
+    MyLogWindow* log_window_m = new MyLogWindow(frame);
+    log_window_m->Show(true);
+
+    // MyFrame* frame = new MyFrame();
+    frame->SetSize(wxSize(800,600));
+    frame->Center();
     frame->Show(true);
+
     return true;
 }
 
 MyFrame::MyFrame()
-    : wxFrame(NULL, wxID_ANY, "ç¬¬ä¸€ä¸ªçª—å£")
+    : wxFrame(NULL, wxID_ANY, "µÚÒ»¸ö´°¿Ú")
 {
+
     wxMenu* menuFile = new wxMenu;
-    menuFile->Append(ID_Hello, "&ä½ å¥½...\tCtrl-H",
-        "æ­¤èœå•çš„æç¤ºæ–‡æœ¬æ˜¾ç¤ºåœ¨çŠ¶æ€æ ");
+    menuFile->Append(ID_Hello, "&ÄãºÃ...\tCtrl-H",
+        "´Ë²Ëµ¥µÄÌáÊ¾ÎÄ±¾ÏÔÊ¾ÔÚ×´Ì¬À¸");
     menuFile->AppendSeparator();
     menuFile->Append(wxID_EXIT);
 
@@ -54,8 +39,8 @@ MyFrame::MyFrame()
     menuHelp->Append(wxID_ABOUT);
 
     wxMenuBar* menuBar = new wxMenuBar;
-    menuBar->Append(menuFile, "æ–‡ä»¶(&F)");
-    menuBar->Append(menuHelp, "å¸®åŠ©(&H)");
+    menuBar->Append(menuFile, "ÎÄ¼þ(&F)");
+    menuBar->Append(menuHelp, "°ïÖú(&H)");
 
     SetMenuBar(menuBar);
 
@@ -80,5 +65,7 @@ void MyFrame::OnAbout(wxCommandEvent& event)
 
 void MyFrame::OnHello(wxCommandEvent& event)
 {
-    wxLogMessage("Hello world from wxWidgets!");
+    LOG_INFO("Hello world from wxWidgets!");
 }
+
+wxIMPLEMENT_APP(MyApp);
